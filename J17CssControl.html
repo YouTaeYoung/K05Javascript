@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J17CssControl.html</title>
+    <script>
+        
+        // 전역변수 : 기사부분의 DOM객체와 폰트사이즈 저장 
+        var pTag, pSize;
+
+        window.onload = function()
+        {
+            //기사가 있는 P태그의 DOM을 얻어옴 
+            pTag = document.getElementById("article");
+
+            //현재 설정된 폰트 사이즈를 얻어옴(별도의 사이즈 지정이 없다면 16px)
+            pSize = parseInt(pTag.style.fontSize);
+        }
+        function fnArticle(flag)
+        {
+            switch(flag)
+            {
+                /*
+                JS에서 CSS속성 컨트롤
+                    : DOM.style.CSS속성 = "속성값";
+                    단, 이때 CSS 속성에 하이픈이 들어간다면 제거후 첫 글자를
+                    대문자로 기술한다. 또한 크기를 설정할때는 반드시 px와 같은
+                    단위를 기술해야 한다.
+                */
+                case "+":
+                    pSize +=10; //폰트 크기 
+                    pTag.style.fontSize = pSize+"px";
+                    break;
+                case "-": //폰트 크기 
+                    pSize -=10;
+                    pTag.style.fontSize = pSize+"px";
+                    break;
+                case "R": //폰트의 색깔 
+                    pTag.style.color="red";
+                    break;
+                case "G":
+                    pTag.style.color="green";
+                    break;
+                case "B":
+                    pTag.style.color="blue";
+                    break;
+                case "Bo" : //폰트의 굵기 
+                    pTag.style.fontWeight = "bold";
+                    break;
+                case "No" :
+                    pTag.style.fontWeight = "normal";
+                    break;
+                case "Ce" : //정렬 
+                    pTag.style.textAlign = "center";
+                    break;
+                case "Le" :
+                    pTag.style.textAlign = "left";
+                    break;
+                case "B_red": //배경색
+                    pTag.style.backgroundColor = "red";
+                    break;
+                case "B_silver":
+                    pTag.style.backgroundColor = "silver";
+                    break;
+                case "B_white":
+                    pTag.style.backgroundColor = "white";
+                    break;
+                default:
+                    pTag.style.color="black";
+            }
+        }
+
+        /*
+        연습문제 ] 글꼴바꾸기 버튼을 계속 누를때마다 아래 5가지
+        폰트가 토글되어 적용될수 있도록 함수를 정희하시오.
+        글꼴 : Verdana, 굴림체, 휴먼엣체, 궁서, Impact
+        */
+
+        var fontToggle = 0;//폰트 토글을 위한 전역변수 
+        
+        function setFont()
+        {
+            //문제에서 주어진 폰트를 배열로 선언 
+            var fontArray = ['Verdana', '굴림체', '휴먼엣체', '궁서', 'Impact'];
+
+            //정수를 5로 나누면 나머지는 0~4까지 생성된다. 배열의 인덱스와 일치함.
+            var idx =  fontToggle % 5;
+
+            //스타일 지정
+            pTag.style.fontFamily = fontArray[idx];
+            
+            //함수를 호출할때마다 전역변수 증가
+            fontToggle++;
+        }
+    </script>
+</head>
+<body>
+    <h2>자바스크립트로 CSS제어하기</h2>
+    <input type="button" value="글꼴바꾸기" onclick="setFont();">
+    <fieldset>
+        <legend>신문기사</legend>
+        <button onclick="fnArticle('+');">+ </button>
+        <button onclick="fnArticle('-');">- </button>
+        <button onclick="fnArticle('R');">Red </button>
+        <button onclick="fnArticle('G');">Green </button>
+        <button onclick="fnArticle('B');">Blue </button>
+        <button onclick="fnArticle('');">Black </button>
+        <button onclick="fnArticle('Bo');">볼드체 </button>
+        <button onclick="fnArticle('No');">보통체 </button>
+        <button onclick="fnArticle('Ce');">가운데정렬 </button>
+        <button onclick="fnArticle('Le');">좌측정렬 </button>
+        
+        <button onclick="fnArticle('B_red');">배경색(red)</button>
+        <button onclick="fnArticle('B_silver');">배경색(silver) </button>
+        <button onclick="fnArticle('B_white');">배경색(white) </button>
+
+        
+    </fieldset>
+    <p style="font-size: 12px;" id="article">
+        (서울=연합뉴스) 박규리 기자 = 최근 국내 코로나19 신규 확진자 수가 하루 2천명대를 기록하고 위중증 환자 수도 500명에 근접하고 있으나 방역당국은 '단계적 일상회복'을 중단하고 '비상계획'을 발동할 수준은 아니라는 입장을 밝혔다.
+
+        손영래 중앙사고수습본부(중수본) 사회전략반장은 16일 온라인 브리핑에서 "현재 단계에서는 아직 의료체계 여력이 있어 (이달 시작된) 단계적 일상회복을 중단하고 비상계획을 발표할 상황까지로 보고 있진 않다"고 말했다.
+        
+        정부는 현재 국내 유행상황은 유럽 등 해외의 대유행 상황처럼 심각한 수준은 아니라는 입장이다.
+        
+        손 반장은 "유럽 등 외국에선 일상회복 이후 대규모 유행까지 촉발된 상황이지만 우리나라는 대규모 유행으로 평가할 정도로 커지진 않았다"며 "극단적인 조치를 강구할 정도로 위험한 상황은 아니다"라고 강조했다.
+        
+        실제 유럽에서는 잠시 주춤했던 코로나19 확산세가 다시 거세지고 있다. 세계보건기구(WHO)의 주간 역학조사에 따르면 지난 1∼7일 보고된 전 세계 신규 확진자 310만여명 중 63%가 유럽에서 발생한 것으로 나타났다.
+        
+        확진자 규모 자체가 폭발적으로 커진 해외 사례와 달리, 국내에서는 60세 이상 고령층과 특정시설에서 감염이 늘어 위중증 환자 수가 증가한 것이 가장 큰 차이라고 방역당국은 설명했다.
+        
+        
+        정례브리핑하는 손영래 중수본 사회전략반장
+        [연합뉴스 자료 사진]
+        
+        
+        손 반장은 "국내 확진자 규모는 위기 시나리오에 있던 5천∼7천명 규모가 아니라 2천명 초·중반대로 전개되고 있고, 다만 60세 이상의 확진자가 증가하면서 위중증 환자가 증가했다"고 말했다.
+        
+        그는 이어 "한 달 전에는 60세 이상 확진자가 전체의 17∼18%였는데 지난주에는 35∼36% 정도로 증가했다"며 "현재는 추가접종을 신속히 진행하고, 요양병원 면회 제한, 종사자 방역 관리 강화 등을 통해 위중증 환자를 줄이기 위해 노력하는 단계"라고 덧붙였다.
+        
+        정부는 아직 의료체계에도 여력이 있어 비상계획까지 발동할 상황은 아니라고 선을 그었다.
+        
+        손 반장은 "수도권의 경우 중환자실 가동률이 올라가고 있으나 지역별 이송이 가능하며, 준중환자-중환자실도 확충 작업을 하고 있다"며 "대규모 유행이 촉발되고 있다기보다는 고령층과 특정시설 중심으로 한 위중증 환자가 증가하고 있어 비상계획을 당장 발동할 상황은 아니라고 본다"고 밝혔다.
+    </p>
+</body>
+</html>
